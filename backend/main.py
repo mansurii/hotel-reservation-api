@@ -160,7 +160,24 @@ async def get_guests():
 
 @app.delete("/guests/{guest_id}")
 async def delete_guest(guest_id: int):
-    pass
+    guest_found = None
+
+    for guest in db_guests:
+        if guest["guest_id"] == guest_id:
+            guest_found = guest
+            break
+
+    if guest_found is None:
+        raise HTTPException(status_code=404, detail="Guest not found")
+
+    for booking in db_bookings:
+        if (booking["guest"]["guest_id"] == guest_id
+            and booking["status"] == "check_in"):
+            raise HTTPException(status_code=409,detail="Cannot delete guest with an active booking")
+
+    db_guests.remove(guest_found)
+
+    return {"message": "Guest deleted successfully", "guest": guest_found}
 
 
 @app.post("/bookings")
