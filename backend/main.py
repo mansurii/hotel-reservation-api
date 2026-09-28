@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-
+from fastapi import HTTPException
+from models import Room, Guest, Book
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
@@ -93,8 +94,21 @@ db_guests = database["guests"]
 db_bookings = database["bookings"]
 
 @app.post("/rooms")
-async def create_room():
-    pass
+async def create_room(room: Room):
+    for check_room_exist in db_rooms:
+        if check_room_exist["room_number"]== room.room_number:
+            raise HTTPException(status_code=409, detail="Room already exists")
+
+    new_room = {
+        "room_number": room.room_number,
+        "room_type": room.room_type,
+        "price": room.room_number,
+        "status": room.status
+    }
+
+    db_rooms.append(new_room)
+
+    return new_room
 
 @app.get("/rooms")
 async def get_rooms():
