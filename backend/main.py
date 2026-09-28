@@ -143,10 +143,45 @@ async def get_guests():
 
 @app.post("/bookings")
 async def create_booking(new_booking: Book):
-    pass
+    guess_found = None
 
+    for guess in db_guests:
+        if guess["guest_id"] == new_booking.guest.guest_id:
+            guess_found = guess
+            break
 
+    if guess_found is None:
+        raise HTTPException(status_code=404, detail="Guess not found")
 
+    room_found = None
+
+    for room in db_rooms:
+        if room["room_number"] == new_booking.room.room_number:
+            room_found = room
+            break
+
+    if room_found is None:
+        raise HTTPException(status_code=404, detail="Room not found")
+
+    if room_found["status"] != "available":
+        raise HTTPException(status_code=409, detail="Room is not available")
+
+    next_id = db_bookings[-1]["booking_id"] + 1
+
+    new_booking = {
+        "booking_id": next_id,
+        "guess": guess_found,
+        "room": room_found,
+        "status": "check_in"
+    }
+
+    db_bookings.append(new_booking)
+
+    room_found["status"] = "occupied"
+
+    new_booking["room"]["status"] = "occupied"
+
+    return new_booking
 
 @app.get("/bookings")
 async def get_bookings():
