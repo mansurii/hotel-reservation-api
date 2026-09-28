@@ -186,7 +186,7 @@ async def get_bookings():
     return db_bookings
 
 @app.patch("/bookings/{booking_id}/checkout")
-async def checkout_cancel_bookings(booking_id: int):
+async def checkout_bookings(booking_id: int):
     booking_found = None
 
     for booking in db_bookings:
