@@ -1,29 +1,30 @@
 from fastapi import FastAPI
+
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
 database = {
     "rooms": [
         {
-            "room_number": 101,
+            "room_number": 1,
             "room_type": "Single",
             "price": 80.0,
             "status": "available"
         },
         {
-            "room_number": 102,
+            "room_number": 2,
             "room_type": "Double",
             "price": 120.0,
             "status": "occupied"
         },
         {
-            "room_number": 201,
+            "room_number": 3,
             "room_type": "Suite",
             "price": 200.0,
             "status": "available"
         },
         {
-            "room_number": 202,
+            "room_number": 4,
             "room_type": "Double",
             "price": 130.0,
             "status": "available"
@@ -62,7 +63,7 @@ database = {
                 "phone": "+44 7700 900001"
             },
             "room": {
-                "room_number": 102,
+                "room_number": 2,
                 "room_type": "Double",
                 "price": 120.0,
                 "status": "occupied"
@@ -77,7 +78,7 @@ database = {
                 "phone": "+44 7700 900002"
             },
             "room": {
-                "room_number": 201,
+                "room_number": 3,
                 "room_type": "Suite",
                 "price": 200.0,
                 "status": "available"
