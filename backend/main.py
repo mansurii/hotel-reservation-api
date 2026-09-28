@@ -102,7 +102,7 @@ db_bookings = database["bookings"]
 @app.post("/rooms")
 async def create_room(room: Room):
     for check_room_exist in db_rooms:
-        if check_room_exist["room_number"]== room.room_number:
+        if check_room_exist["room_number"] == room.room_number:
             raise HTTPException(status_code=409, detail="Room already exists")
 
     new_room = {
@@ -122,7 +122,19 @@ async def get_rooms():
 
 @app.post("/guests")
 async def create_guest(guest: Guest):
-    pass
+    next_id = db_guests[-1]["guest_id"] + 1
+
+    new_guest = {
+        "guest_id": next_id,
+        "name:": guest.name,
+        "email": guest.email,
+        "phone": guest.phone
+    }
+
+    db_guests.append(new_guest)
+
+    return new_guest
+
 
 @app.get("/guests")
 async def get_guests():
