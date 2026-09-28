@@ -7,6 +7,11 @@ class Room(BaseModel):
     price: float
     status: Literal["available", "occupied"]
 
+class GuestCreate(BaseModel):
+    name: str
+    email: str
+    phone: str
+
 class Guest(BaseModel):
     guest_id: int
     name: str
