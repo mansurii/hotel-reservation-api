@@ -34,21 +34,25 @@ database = {
 
     "guests": [
         {
+            "guest_id": 1,
             "name": "James Wilson",
             "email": "james@example.com",
             "phone": "+44 7700 900001"
         },
         {
+            "guest_id": 2,
             "name": "Aisha Khan",
             "email": "aisha@example.com",
             "phone": "+44 7700 900002"
         },
         {
+            "guest_id": 3,
             "name": "Daniel Brown",
             "email": "daniel@example.com",
             "phone": "+44 7700 900003"
         },
         {
+            "guest_id": 4,
             "name": "Sophia Taylor",
             "email": "sophia@example.com",
             "phone": "+44 7700 900004"
@@ -59,6 +63,7 @@ database = {
         {
             "booking_id": 1,
             "guest": {
+                "guest_id": 1,
                 "name": "James Wilson",
                 "email": "james@example.com",
                 "phone": "+44 7700 900001"
@@ -74,6 +79,7 @@ database = {
         {
             "booking_id": 2,
             "guest": {
+                "guest_id": 2,
                 "name": "Aisha Khan",
                 "email": "aisha@example.com",
                 "phone": "+44 7700 900002"
@@ -115,12 +121,20 @@ async def get_rooms():
     return db_rooms
 
 @app.post("/guests")
-async def create_guest():
-    pass
+async def create_guest(guest: Guest):
+    new_guest = {
+        "name:": guest.name,
+        "email": guest.email,
+        "phone": guest.phone
+    }
+
+    db_guests.append(new_guest)
+
+    return new_guest
 
 @app.get("/guests")
 async def get_guests():
-    pass
+    return db_guests
 
 
 @app.post("/bookings")
