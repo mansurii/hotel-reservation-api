@@ -3,7 +3,7 @@ from typing import Literal
 
 class Room(BaseModel):
     room_number: int
-    room_type: str
+    room_type: Literal["Single", "Double", "Suite"]
     price: float
     status: Literal["available", "occupied"]
 
