@@ -112,7 +112,7 @@ async def create_room(room: Room):
 
 @app.get("/rooms")
 async def get_rooms():
-    pass
+    return db_rooms
 
 @app.post("/guests")
 async def create_guest():
