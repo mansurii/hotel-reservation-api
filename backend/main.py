@@ -214,6 +214,8 @@ async def checkout_bookings(booking_id: int):
 
     room_found["status"] = "available"
 
+    booking_found["room"]["status"] = "available"
+
     booking_found["status"] = "check_out"
 
     return booking_found
