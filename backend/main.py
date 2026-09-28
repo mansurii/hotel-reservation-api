@@ -108,7 +108,7 @@ async def create_room(room: Room):
     new_room = {
         "room_number": room.room_number,
         "room_type": room.room_type,
-        "price": room.room_number,
+        "price": room.price,
         "status": room.status
     }
 
@@ -126,7 +126,7 @@ async def create_guest(guest: Guest):
 
     new_guest = {
         "guest_id": next_id,
-        "name:": guest.name,
+        "name": guest.name,
         "email": guest.email,
         "phone": guest.phone
     }
@@ -142,8 +142,11 @@ async def get_guests():
 
 
 @app.post("/bookings")
-async def create_booking():
+async def create_booking(new_booking: Book):
     pass
+
+
+
 
 @app.get("/bookings")
 async def get_bookings():

@@ -8,6 +8,7 @@ class Room(BaseModel):
     status: Literal["available", "occupied"]
 
 class Guest(BaseModel):
+    guest_id: int
     name: str
     email: str
     phone: str
