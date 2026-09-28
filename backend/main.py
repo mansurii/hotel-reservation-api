@@ -135,11 +135,9 @@ async def create_guest(guest: Guest):
 
     return new_guest
 
-
 @app.get("/guests")
 async def get_guests():
     return db_guests
-
 
 @app.post("/bookings")
 async def create_booking(new_booking: Book):
@@ -189,4 +187,36 @@ async def get_bookings():
 
 @app.patch("/bookings/{booking_id}/checkout")
 async def checkout_cancel_bookings(booking_id: int):
-    pass
+    booking_found = None
+
+    for booking in db_bookings:
+        if booking["booking_id"] == booking_id:
+            booking_found = booking
+            break
+
+    if booking_found is None:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    if booking_found["status"] == "check_out":
+        raise HTTPException(status_code=409, detail="Booking has already been checked out")
+
+    room_number = booking_found["room"]["room_number"]
+
+    room_found = None
+
+    for room in db_rooms:
+        if room["room_number"] == room_number:
+            room_found = room
+            break
+
+    if room_found is None:
+        raise HTTPException(status_code=404,detail="Room associated with booking not found")
+
+    room_found["status"] = "available"
+
+    booking_found["room"]["status"] = "available"
+
+    # Update booking status
+    booking_found["status"] = "check_out"
+
+    return booking_found
