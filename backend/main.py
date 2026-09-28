@@ -185,7 +185,7 @@ async def create_booking(new_booking: Book):
 
 @app.get("/bookings")
 async def get_bookings():
-    pass
+    return db_bookings
 
 @app.patch("/bookings/{booking_id}/checkout")
 async def checkout_cancel_bookings(booking_id: int):
