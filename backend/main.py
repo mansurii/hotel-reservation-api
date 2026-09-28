@@ -120,6 +120,10 @@ async def create_room(room: Room):
 async def get_rooms():
     return db_rooms
 
+@app.delete("/rooms/{room_number}")
+async  def delete_room(room_number: int):
+    pass
+
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
 
