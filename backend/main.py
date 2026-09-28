@@ -122,7 +122,21 @@ async def get_rooms():
 
 @app.delete("/rooms/{room_number}")
 async  def delete_room(room_number: int):
-    pass
+    room_found = None
+
+    for room in db_rooms:
+        if room["room_number"] == room_number:
+            room_found = room
+            break
+    if room_found is None:
+        raise HTTPException(status_code=404, detail="Room not found")
+
+    if room_found["status"] == "occupied":
+        raise HTTPException(status_code=409, detail="Cannot delete an occupied room")
+
+    db_rooms.remove(room_found)
+
+    return { "message": "Room deleted successfully", "room": room_found}
 
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
