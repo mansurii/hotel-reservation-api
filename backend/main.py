@@ -158,6 +158,11 @@ async def create_guest(guest: GuestCreate):
 async def get_guests():
     return db_guests
 
+@app.delete("/guests/{guest_id}")
+async def delete_guest(guest_id: int):
+    pass
+
+
 @app.post("/bookings")
 async def create_booking(new_booking: Booking):
     guest_found = None
