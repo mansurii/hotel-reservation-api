@@ -13,9 +13,7 @@ class Guest(BaseModel):
     email: str
     phone: str
 
-class Book(BaseModel):
-    booking_id: int
+class Booking(BaseModel):
     guest: Guest
     room: Room
-    status: Literal["check_in", "check_out"]
 

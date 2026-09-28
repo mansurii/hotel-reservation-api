@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, Guest, Book
+from models import Room, Guest, Booking
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
@@ -122,6 +122,7 @@ async def get_rooms():
 
 @app.post("/guests")
 async def create_guest(guest: Guest):
+
     next_id = db_guests[-1]["guest_id"] + 1
 
     new_guest = {
@@ -140,16 +141,16 @@ async def get_guests():
     return db_guests
 
 @app.post("/bookings")
-async def create_booking(new_booking: Book):
-    guess_found = None
+async def create_booking(new_booking: Booking):
+    guest_found = None
 
-    for guess in db_guests:
-        if guess["guest_id"] == new_booking.guest.guest_id:
-            guess_found = guess
+    for guest in db_guests:
+        if guest["guest_id"] == new_booking.guest.guest_id:
+            guest_found= guest
             break
 
-    if guess_found is None:
-        raise HTTPException(status_code=404, detail="Guess not found")
+    if guest_found is None:
+        raise HTTPException(status_code=404, detail="Guest not found")
 
     room_found = None
 
@@ -168,7 +169,7 @@ async def create_booking(new_booking: Book):
 
     new_booking = {
         "booking_id": next_id,
-        "guess": guess_found,
+        "guest": guest_found,
         "room": room_found,
         "status": "check_in"
     }
@@ -176,8 +177,6 @@ async def create_booking(new_booking: Book):
     db_bookings.append(new_booking)
 
     room_found["status"] = "occupied"
-
-    new_booking["room"]["status"] = "occupied"
 
     return new_booking
 
@@ -187,6 +186,7 @@ async def get_bookings():
 
 @app.patch("/bookings/{booking_id}/checkout")
 async def checkout_bookings(booking_id: int):
+
     booking_found = None
 
     for booking in db_bookings:
@@ -214,9 +214,6 @@ async def checkout_bookings(booking_id: int):
 
     room_found["status"] = "available"
 
-    booking_found["room"]["status"] = "available"
-
-    # Update booking status
     booking_found["status"] = "check_out"
 
     return booking_found
