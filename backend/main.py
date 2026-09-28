@@ -122,19 +122,11 @@ async def get_rooms():
 
 @app.post("/guests")
 async def create_guest(guest: Guest):
-    new_guest = {
-        "name:": guest.name,
-        "email": guest.email,
-        "phone": guest.phone
-    }
-
-    db_guests.append(new_guest)
-
-    return new_guest
+    pass
 
 @app.get("/guests")
 async def get_guests():
-    return db_guests
+    pass
 
 
 @app.post("/bookings")
