@@ -138,7 +138,7 @@ async def create_guest(guest: Guest):
 
 @app.get("/guests")
 async def get_guests():
-    pass
+    return db_guests
 
 
 @app.post("/bookings")
