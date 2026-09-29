@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, CreateBooking, GuestCreate, RoomPartialUpdate
+from models import Room, CreateBooking, GuestCreate, RoomPartialUpdate, RoomUpdate
 
 app = FastAPI(title="Hotel Reservation API")
 
@@ -149,6 +149,16 @@ async  def update_room_partial(room_number: int, updated_room_partial: RoomParti
                 room["price"] = updated_room_partial.price
             if updated_room_partial.status is not None:
                 room["status"] = updated_room_partial.status
+            return room
+    raise HTTPException(status_code=404, detail="Room not found")
+
+@app.put("/rooms/{room_number}")
+async  def update_room(room_number: int, updated_room: RoomUpdate):
+    for room in db_rooms:
+        if room["room_number"] == room_number:
+            room["room_type"] = updated_room.room_type
+            room["price"] = updated_room.price
+            room["status"] = updated_room.status
             return room
     raise HTTPException(status_code=404, detail="Room not found")
 
