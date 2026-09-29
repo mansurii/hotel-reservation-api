@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, CreateBooking, GuestCreate, GuestUpdate, RoomPartialUpdate, RoomUpdate
+from models import Room, CreateBooking, GuestCreate, GuestUpdate, GuestPartialUpdate, RoomPartialUpdate, RoomUpdate
 
 app = FastAPI(title="Hotel Reservation API")
 
@@ -202,6 +202,19 @@ async def delete_guest(guest_id: int):
     db_guests.remove(guest_found)
 
     return {"message": "Guest deleted successfully", "guest": guest_found}
+
+@app.patch("/guests/{guest_id}")
+async def update_guest_partial(guest_id: int, updated_guest_partial: GuestPartialUpdate):
+    for guest in db_guests:
+        if guest["guest_id"] == guest_id:
+            if updated_guest_partial.name is not None:
+                guest["name"] = updated_guest_partial.name
+            if updated_guest_partial.email is not None:
+                guest["email"] = updated_guest_partial.email
+            if updated_guest_partial.phone is not None:
+                guest["phone"] = updated_guest_partial.phone
+            return  guest
+    raise HTTPException(status_code=404, detail="Guest not found")
 
 @app.put("/guests/{guest_id}")
 async def update_guest(guest_id: int, updated_guest: GuestUpdate):
