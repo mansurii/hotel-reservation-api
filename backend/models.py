@@ -28,7 +28,9 @@ class GuestUpdate(BaseModel):
     phone: str
 
 class GuestPartialUpdate(BaseModel):
-    pass
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
 
 class Guest(BaseModel):
     guest_id: int
