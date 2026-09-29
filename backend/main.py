@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, CreateBooking, GuestCreate, RoomUpdate
+from models import Room, CreateBooking, GuestCreate, RoomPartialUpdate
 
 app = FastAPI(title="Hotel Reservation API")
 
@@ -140,7 +140,7 @@ async  def delete_room(room_number: int):
     return { "message": "Room deleted successfully", "room": room_found}
 
 @app.patch("/rooms/{room_number}")
-async  def update_room_partial(room_number: int, updated_room_partial: RoomUpdate):
+async  def update_room_partial(room_number: int, updated_room_partial: RoomPartialUpdate):
     for room in db_rooms:
         if room["room_number"] == room_number:
             if updated_room_partial.room_type is not None:
