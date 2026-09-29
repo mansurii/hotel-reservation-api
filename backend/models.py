@@ -12,6 +12,9 @@ class RoomPartialUpdate(BaseModel):
     price: Optional[float] = None
     status: Optional[Literal["available", "occupied"]] = None
 
+class RoomUpdate(BaseModel):
+    pass
+
 class GuestCreate(BaseModel):
     name: str
     email: str
