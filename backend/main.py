@@ -150,7 +150,7 @@ async  def update_room_partial(room_number: int, updated_room_partial: RoomUpdat
             if updated_room_partial.status is not None:
                 room["status"] = updated_room_partial.status
             return room
-    raise HTTPException(status_code=404, detail="Book not found!")
+    raise HTTPException(status_code=404, detail="Room not found")
 
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
