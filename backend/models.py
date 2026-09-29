@@ -7,7 +7,7 @@ class Room(BaseModel):
     price: float
     status: Literal["available", "occupied"]
 
-class RoomUpdate(BaseModel):
+class RoomPartialUpdate(BaseModel):
     room_type: Optional[Literal["Single", "Double", "Suite"]] = None
     price: Optional[float] = None
     status: Optional[Literal["available", "occupied"]] = None
@@ -31,4 +31,3 @@ class Guest(BaseModel):
 class CreateBooking(BaseModel):
     guest: Guest
     room: Room
-
