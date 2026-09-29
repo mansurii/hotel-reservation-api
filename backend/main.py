@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, Booking, GuestCreate
+from models import Room, CreateBooking, GuestCreate
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
@@ -138,6 +138,7 @@ async  def delete_room(room_number: int):
 
     return { "message": "Room deleted successfully", "room": room_found}
 
+
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
 
@@ -181,7 +182,7 @@ async def delete_guest(guest_id: int):
 
 
 @app.post("/bookings")
-async def create_booking(new_booking: Booking):
+async def create_booking(new_booking: CreateBooking):
     guest_found = None
 
     for guest in db_guests:

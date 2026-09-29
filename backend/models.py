@@ -18,7 +18,7 @@ class Guest(BaseModel):
     email: str
     phone: str
 
-class Booking(BaseModel):
+class CreateBooking(BaseModel):
     guest: Guest
     room: Room
 
