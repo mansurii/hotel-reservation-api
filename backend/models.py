@@ -1,11 +1,17 @@
 from pydantic import BaseModel
-from typing import Literal
+from typing import Literal, Optional
 
 class Room(BaseModel):
     room_number: int
     room_type: Literal["Single", "Double", "Suite"]
     price: float
     status: Literal["available", "occupied"]
+
+class RoomUpdate(BaseModel):
+    room_number: Optional[int] = None
+    room_type: Optional[Literal["Single", "Double", "Suite"]] = None
+    price: Optional[float] = None
+    status: Optional[Literal["available", "occupied"]] = None
 
 class GuestCreate(BaseModel):
     name: str
