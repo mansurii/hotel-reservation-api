@@ -22,7 +22,7 @@ class GuestCreate(BaseModel):
     email: str
     phone: str
 
-class GuessUpdate(BaseModel):
+class GuestUpdate(BaseModel):
     name: str
     email: str
     phone: str
