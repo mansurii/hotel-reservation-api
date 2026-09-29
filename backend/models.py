@@ -18,6 +18,11 @@ class GuestCreate(BaseModel):
     email: str
     phone: str
 
+class GuessUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+
 class Guest(BaseModel):
     guest_id: int
     name: str
