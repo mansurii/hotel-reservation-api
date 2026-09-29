@@ -25,4 +25,12 @@ A full-stack hotel reservation application with a separate backend API and front
 ├── LICENSE
 └── README.md
 ```
+## Tech Stack
 
+| Technology | Purpose |
+|:-----------|:--------|
+| Python 3.10+ | Backend development |
+| FastAPI | REST API framework |
+| HTML5 | Frontend structure |
+| CSS3 | Frontend styling |
+| JavaScript | Frontend functionality |
