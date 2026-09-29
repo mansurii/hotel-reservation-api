@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
-from models import Room, CreateBooking, GuestCreate
+from models import Room, CreateBooking, GuestCreate, RoomUpdate
+
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
@@ -138,6 +139,18 @@ async  def delete_room(room_number: int):
 
     return { "message": "Room deleted successfully", "room": room_found}
 
+@app.patch("/rooms/{room_number}")
+async  def update_room_partial(room_number: int, updated_room_partial: RoomUpdate):
+    for room in db_rooms:
+        if room["room_number"] == room_number:
+            if updated_room_partial.room_type is not None:
+                room["room_type"] = updated_room_partial.room_type
+            if updated_room_partial.price is not None:
+                room["price"] = updated_room_partial.price
+            if updated_room_partial.status is not None:
+                room["status"] = updated_room_partial.status
+            return room
+    raise HTTPException(status_code=404, detail="Book not found!")
 
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
