@@ -8,7 +8,6 @@ class Room(BaseModel):
     status: Literal["available", "occupied"]
 
 class RoomUpdate(BaseModel):
-    room_number: Optional[int] = None
     room_type: Optional[Literal["Single", "Double", "Suite"]] = None
     price: Optional[float] = None
     status: Optional[Literal["available", "occupied"]] = None
