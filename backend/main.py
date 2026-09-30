@@ -162,6 +162,14 @@ async  def update_room(room_number: int, updated_room: RoomUpdate):
             return room
     raise HTTPException(status_code=404, detail="Room not found")
 
+@app.get("/rooms/occupied")
+async  def get_occupied_rooms():
+    occupied_rooms = []
+    for room in db_rooms:
+        if room["status"] == "occupied":
+            occupied_rooms.append(room)
+    return occupied_rooms
+
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
 
