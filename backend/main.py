@@ -1,6 +1,5 @@
-from fastapi import FastAPI
-from fastapi import HTTPException
-from models import Room, CreateBooking, GuestCreate, GuestUpdate, GuestPartialUpdate, RoomPartialUpdate, RoomUpdate
+from fastapi import FastAPI, HTTPException
+from models import Room, RoomPartialUpdate, RoomUpdate, GuestCreate, GuestUpdate, GuestPartialUpdate, CreateBooking
 
 app = FastAPI(title="Hotel Reservation API")
 
