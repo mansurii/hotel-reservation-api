@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from models import Room, RoomPartialUpdate, RoomUpdate, GuestCreate, GuestUpdate, GuestPartialUpdate, CreateBooking
-
+from typing import Literal
 app = FastAPI(title="Hotel Reservation API")
 
 # Create fake database with prepopulated data
@@ -176,6 +176,15 @@ async  def get_available_rooms():
         if room["status"] == "available":
             available_rooms.append(room)
     return available_rooms
+
+@app.get("/rooms/room_type")
+async def get_room_type(room_type: Literal["Single", "Double", "Suite"]):
+    room_types = []
+    for room in db_rooms:
+        if room["room_type"] == room_type:
+            room_types.append(room)
+    return room_types
+
 
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
