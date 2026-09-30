@@ -161,21 +161,13 @@ async  def update_room(room_number: int, updated_room: RoomUpdate):
             return room
     raise HTTPException(status_code=404, detail="Room not found")
 
-@app.get("/rooms/occupied")
-async  def get_occupied_rooms():
-    occupied_rooms = []
+@app.get("/rooms/status")
+async def get_room_status(status: Literal["available", "occupied"]):
+    room_status = []
     for room in db_rooms:
-        if room["status"] == "occupied":
-            occupied_rooms.append(room)
-    return occupied_rooms
-
-@app.get("/rooms/available")
-async  def get_available_rooms():
-    available_rooms = []
-    for room in db_rooms:
-        if room["status"] == "available":
-            available_rooms.append(room)
-    return available_rooms
+        if room["status"] == status:
+            room_status.append(room)
+    return room_status
 
 @app.get("/rooms/room_type")
 async def get_room_type(room_type: Literal["Single", "Double", "Suite"]):
