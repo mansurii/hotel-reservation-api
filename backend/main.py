@@ -281,6 +281,14 @@ async def create_booking(new_booking: CreateBooking):
 
     return new_booking
 
+@app.get("/guests/filter")
+async def get_filtered_guest(guess_filter: str):
+    filtered_guest = []
+    for guest in db_guests:
+        if guest["name"] == guess_filter or guest["email"] == guess_filter or guest["phone"] == guess_filter:
+            filtered_guest.append(guest)
+    return filtered_guest
+
 @app.get("/bookings")
 async def get_bookings():
     return db_bookings
