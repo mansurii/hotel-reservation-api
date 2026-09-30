@@ -170,6 +170,14 @@ async  def get_occupied_rooms():
             occupied_rooms.append(room)
     return occupied_rooms
 
+@app.get("/rooms/available")
+async  def get_available_rooms():
+    available_rooms = []
+    for room in db_rooms:
+        if room["status"] == "available":
+            available_rooms.append(room)
+    return available_rooms
+
 @app.post("/guests")
 async def create_guest(guest: GuestCreate):
 
